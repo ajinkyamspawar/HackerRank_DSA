@@ -1,0 +1,45 @@
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+#
+# Complete the 'hourglassSum' function below.
+#
+# The function is expected to return an INTEGER.
+# The function accepts 2D_INTEGER_ARRAY arr as parameter.
+#
+
+def hourglassSum(arr):
+    # Write your code here
+    max_sum = float('-inf') # Initialise to a very low value 
+    
+    # Loop over possible hourglass centers (excluding the borders)
+    for i in range(1, 5): # Row Indices 1 to 4 
+        for j in range(1,5):
+        # Calculate the hourglass sum 
+            hourglass_sum = (arr[i-1][j-1]+arr[i-1][j]+arr[i-1][j+1]+ # First row elements of an hourglass
+            arr[i][j]+ # Middle element of an hourglass
+            arr[i+1][j-1] + arr[i+1][j] + arr[i+1][j+1] # Bottom row
+                )
+            
+            #updating max_sum with the hourglass sum if it is greater 
+            max_sum = max(max_sum, hourglass_sum)
+    return max_sum
+    
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    arr = []
+
+    for _ in range(6):
+        arr.append(list(map(int, input().rstrip().split())))
+
+    result = hourglassSum(arr)
+
+    fptr.write(str(result) + '\n')
+
+    fptr.close()
